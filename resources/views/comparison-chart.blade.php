@@ -62,6 +62,26 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="no-data-error-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title text-center">Error getting some data</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="/images/error.png" class="center-block" style="width: 100px">
+                    <h4 class="modal-title text-center">OOPS! AI model experienced error getting live stream data for the selected time region. Please check later!</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 @endsection
 @section('additional-scripts')
 
@@ -80,11 +100,14 @@
         var start_year=2013,start_week=1,end_year=2013,end_week=52,moh="Panadura";
 
         document.addEventListener("DOMContentLoaded", function(event) {
-            initDateRangeSlider();
-            $('.sidebar-toggle').click()
-            previewData(start_year,start_week,end_year,end_week,moh);
+            initPage()
         });
 
+        function initPage(){
+            initDateRangeSlider();
+            $('.sidebar-toggle').click();
+            previewData(start_year,start_week,end_year,end_week,moh);
+        }
         $('.select2').select2();
 
         $("#previous_year").click(function (e) {
@@ -241,6 +264,9 @@
                     console.log(data);
                     // var heatMapData = {max:12, data: data};
                     // predictionHeatMapLayer.setData(heatMapData);
+                    if(data.real_cases.length ==0){
+                        noDataError();
+                    }
                     var prepareddata = prepareData(data);
                     drawChart(prepareddata[0],prepareddata[1],prepareddata[2]);
                 },
@@ -263,7 +289,7 @@
             }
             for(var i=0;i<data.predicted_cases.length;i++){
 
-                var predCase = data.real_cases[i];
+                var predCase = data.predicted_cases[i];
                 predictedCases.push(predCase.cases);
                 lables_pred.push(predCase.year + "-" + predCase.week);
             }
@@ -272,6 +298,8 @@
             return [realCases,predictedCases,lables_real];
         }
         function drawChart(real_cases,predicted_cases,labels) {
+
+            console.log("displaying chart")
             var lineChartData = {
                 labels  : labels,
                 datasets: [
@@ -346,7 +374,9 @@
 
 
         }
-
+        function noDataError(){
+                    $('#no-data-error-modal').modal('show');
+                }
     </script>
 
 @endsection

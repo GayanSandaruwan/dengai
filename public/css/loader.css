@@ -1,0 +1,243 @@
+@keyframes spin {
+
+    /*0% { transform: rotate(0deg); }*/
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes xline {
+    25%{
+        transform: translateX(-300px);
+    }
+    /*			50%{
+                    transform:  translateX(0px);
+                }*/
+    75%{
+        transform:  translateX(300px);
+    }
+}
+
+@keyframes yline {
+    25%{
+        transform: translateY(-100px);
+    }
+    50%{
+        transform: translateY(0px);
+    }
+    75%{
+        transform: translateY(100px);
+    }
+}
+@keyframes flip{
+    0% {transform: rotateY(0deg);}
+    20% {transform: rotateY(0deg);}
+    25% {transform: rotateY(180deg);}
+    70%{transform: rotateY(180deg);}
+    75%{transform: rotateY(0deg);}
+    /*			100%{transform: rotateY(0deg);}
+    */
+}
+@keyframes xline-late {
+    25%{
+        transform: translateX(300px);
+    }
+    /*			50%{
+                    transform:  translateX(0px);
+                }*/
+    75%{
+        transform:  translateX(-300px);
+    }
+}
+@keyframes flip-late{
+    0% {transform: rotateY(-180deg);}
+    20% {transform: rotateY(-180deg);}
+    25% {transform: rotateY(0deg);}
+    70%{transform: rotateY(0deg);}
+    75%{transform: rotateY(-180deg);}
+    100%{transform: rotateY(-180deg);}
+
+}
+
+@keyframes show-hide {
+    0%{
+        visibility: hidden;
+        opacity: 0;
+    }
+    50%{
+        visibility: visible;
+        opacity: 1;
+    }
+}
+.moveHorizontaly{
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    animation: xline 3s  infinite linear;
+}
+
+.moveVertically{
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    animation: yline 1.5s infinite cubic-bezier(.46,.03,.52,.96);
+
+}
+
+.spin {
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    animation: spin 1.5s infinite alternate-reverse linear;
+}
+
+.flipAround{
+    /*z-index: 0*/
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    animation: flip 3s  infinite linear;
+
+}
+.moveHorizontaly-late{
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    animation: xline-late 3s  infinite linear;
+}
+
+.moveVertically-late{
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    animation: yline 1.5s infinite cubic-bezier(.46,.03,.52,.96);
+
+}
+
+.spin-late{
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    animation: spin 1.5s infinite alternate-reverse linear;
+}
+
+.flipAround-late{
+    /*z-index: 0*/
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    animation: flip-late 3s  infinite linear;
+
+}
+.show-hide{
+    position: absolute;
+    left: 48%;
+    top: 40%;
+    animation: show-hide 1.5s infinite linear ;
+    visibility: hidden;
+}
+
+/*background key frames*/
+
+@-webkit-keyframes bg-pan-left {
+    0% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+@keyframes bg-pan-left {
+    0% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.loader {
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+
+}
+
+.sliding-background {
+    /*	display: block;
+        z-index: 905;*/
+    background-image: linear-gradient(90deg,#FF3030,#FF9595,#820000);
+    background-size: 600% 100%;
+    height: 100%;
+    width: 100%;
+    -webkit-animation: bg-pan-left 1.5s infinite alternate-reverse both;
+    animation: bg-pan-left 1.5s infinite alternate-reverse linear;
+}
+
+/* Center the loader */
+#rotater {
+    position: absolute;
+    left: 53%;
+    top: 70%;
+    z-index: 1;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 80px;
+    height: 80px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+    to {
+        bottom: 0px;
+        opacity: 1
+    }
+}
+
+@keyframes animatebottom {
+    from {
+        bottom: -100px;
+        opacity: 0
+    }
+    to {
+        bottom: 0;
+        opacity: 1
+    }
+}
+
+#content {
+    display: none;
+    text-align: center;
+}

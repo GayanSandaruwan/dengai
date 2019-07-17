@@ -58,6 +58,26 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="no-data-error-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title text-center">Error getting some data</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="/images/error.png" class="center-block" style="width: 100px">
+                    <h4 class="modal-title text-center">OOPS! AI model experienced error getting live stream data for the selected time region. Please check later!</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
     <style>
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
@@ -112,7 +132,7 @@
     <script src="{{asset('/js/gmaps-heatmap.js')}}"></script>
     <script>
         var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-        var current_year = 2012;
+        var current_year = 2013;
         var predictionMap;
         var predictionHeatMapLayer, realHeatMapLayer;
         var realMap;
@@ -122,7 +142,9 @@
         document.addEventListener("DOMContentLoaded", function(event) {
             initMap();
             initDateRangeSlider();
-            $('.sidebar-toggle').click()
+            $('.sidebar-toggle').click();
+            previewData(current_year,1)
+
         });
 
         $("#previous_year").click(function (e) {
@@ -156,7 +178,7 @@
                 step:{
                     days: 7
                 },
-                bounds: {min: new Date(current_year, 0, 1), max: new Date(current_year+1,0,1)},
+                bounds: {min: firstMonday(current_year,0), max: firstMonday(current_year+1,0)},
                 // defaultValues: {min: new Date(current_year, 0, 1), max: new Date(current_year, 0, 8)},
                 scales: [{
                     first: function(value){ return value; },
@@ -279,7 +301,29 @@
             // Return array of year and week number
             return [d.getUTCFullYear(), weekNo];
         }
+        function firstMonday (year, month){
 
+            var d = new Date(year, month, 1, 0, 0, 0, 0);
+            var day = 0;
+
+            // check if first of the month is a Sunday, if so set date to the second
+            if (d.getDay() === 0) {
+
+                day = 2;
+                d = d.setDate(day);
+                d = new Date(d);
+            }
+
+            // check if first of the month is a Monday, if so return the date, otherwise get to the Monday following the first of the month
+            else if (d.getDay() !== 1) {
+
+                day = 9-(d.getDay());
+                d = d.setDate(day);
+                d = new Date(d);
+            }
+            return d
+
+        }
         function previewData(year,week) {
             $.ajax({
                 /* the route pointing to the post function */
@@ -291,7 +335,9 @@
                 /* remind that 'data' is the response of the AjaxController */
                 success: function (data) {
                     console.log(data);
-
+                    if(data.length ==0){
+                        noDataError();
+                    }
                     var heatMapData = {max:12, data: data};
                     predictionHeatMapLayer.setData(heatMapData);
                 },
@@ -310,7 +356,9 @@
                 /* remind that 'data' is the response of the AjaxController */
                 success: function (data) {
                     console.log(data);
-
+                    if(data.length ==0){
+                        noDataError();
+                    }
                     var heatMapData = {max:12, data: data};
                     realHeatMapLayer.setData(heatMapData);
                 },
@@ -322,7 +370,9 @@
 
         }
 
-
+        function noDataError(){
+            $('#no-data-error-modal').modal('show');
+        }
     </script>
 
 @endsection
