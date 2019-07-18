@@ -99,6 +99,7 @@
 
         var start_year=2013,start_week=1,end_year=2013,end_week=52,moh="Panadura";
 
+        var lineChart;
         document.addEventListener("DOMContentLoaded", function(event) {
             initPage()
         });
@@ -367,8 +368,12 @@
         //-------------
         //- LINE CHART -
         //--------------
+
+        if (lineChart) {
+	        lineChart.destroy();
+	    }
         var lineChartCanvas          = $('#lineChart').get(0).getContext('2d')
-        var lineChart                = new Chart(lineChartCanvas)
+        lineChart                = new Chart(lineChartCanvas)
         lineChartOptions.datasetFill = false
         lineChart.Line(lineChartData, lineChartOptions)
 

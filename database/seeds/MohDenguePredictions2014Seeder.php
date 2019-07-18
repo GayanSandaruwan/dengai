@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class MohDenguePredictionsSeeder2014 extends Seeder
+class MohDenguePredictions2014Seeder extends Seeder
 {
     /**
      * Run the database seeds.
