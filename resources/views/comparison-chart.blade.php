@@ -369,13 +369,17 @@
         //- LINE CHART -
         //--------------
 
-        if (lineChart) {
-	        lineChart.destroy();
-	    }
-        var lineChartCanvas          = $('#lineChart').get(0).getContext('2d')
-        lineChart                = new Chart(lineChartCanvas)
-        lineChartOptions.datasetFill = false
-        lineChart.Line(lineChartData, lineChartOptions)
+        //if (lineChart) {
+	    //    lineChart.data = lineChartData;
+	    //    lineChart.update();
+	    //}
+	    //else{
+            var lineChartCanvas          = $('#lineChart').get(0).getContext('2d')
+            lineChart                = new Chart(lineChartCanvas)
+            lineChartOptions.datasetFill = false
+            lineChart.Line(lineChartData, lineChartOptions)
+	    //}
+
 
 
         }
