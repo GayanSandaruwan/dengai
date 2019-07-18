@@ -75,6 +75,8 @@ class PredictionController extends Controller
                 ->where('week','>=',$start_week)
                 ->where('week','<=',$end_week)
                 ->where('moh','=',$moh)
+                ->orderBy('year')
+                ->orderBy('week')
                 ->get();
             $predCases = DB::table('moh_dengue_predictions')
                 ->select('cases','week','year')
@@ -83,7 +85,8 @@ class PredictionController extends Controller
                 ->where('week','<=',$end_week)
                 ->where('moh','=',$moh)
                 ->where('algorithm','=',$algorithm)
-
+                ->orderBy('year')
+                ->orderBy('week')
                 ->get();
         }
         else{
@@ -92,7 +95,9 @@ class PredictionController extends Controller
                 ->where('year','=',$start_year)
                 ->where('week','>=',$start_week)
                 ->where('week','<=',$max_week_no_of_Year)
-                ->where('moh','=',$moh);
+                ->where('moh','=',$moh)
+                ->orderBy('year')
+                ->orderBy('week');
 
 
             $realCases2 = DB::table('moh_dengue_cases')
@@ -100,7 +105,9 @@ class PredictionController extends Controller
                 ->where('year','=',$end_year)
                 ->where('week','>=',$min_week_no_of_year)
                 ->where('week','<=',$end_week)
-                ->where('moh','=',$moh);
+                ->where('moh','=',$moh)
+                ->orderBy('year')
+                ->orderBy('week');
 
 
             $realCases = $realCases1->union($realCases2)->get();
@@ -111,7 +118,9 @@ class PredictionController extends Controller
                 ->where('week','>=',$start_week)
                 ->where('week','<=',$max_week_no_of_Year)
                 ->where('moh','=',$moh)
-                ->where('algorithm','=',$algorithm);
+                ->where('algorithm','=',$algorithm)
+                ->orderBy('year')
+                ->orderBy('week');
 
 
 
@@ -121,7 +130,9 @@ class PredictionController extends Controller
                 ->where('week','>=',$min_week_no_of_year)
                 ->where('week','<=',$end_week)
                 ->where('moh','=',$moh)
-                ->where('algorithm','=',$algorithm);
+                ->where('algorithm','=',$algorithm)
+                ->orderBy('year')
+                ->orderBy('week');
 
 
 
